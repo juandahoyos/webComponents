@@ -3,14 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "aprovisionar-medidor": {
+    "medidores": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -20,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/aprovisionar-medidor",
+            "outputPath": "dist/medidores",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -31,6 +28,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@epm/webcomponents/assets/css/epm.min.css",
+              "node_modules/@epm/webcomponents/assets/css/web-components.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -46,6 +45,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -53,13 +53,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "aprovisionar-medidor:build"
+            "browserTarget": "medidores:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "aprovisionar-medidor:build:production"
+              "browserTarget": "medidores:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "aprovisionar-medidor:build"
+            "browserTarget": "medidores:build"
           }
         },
         "test": {
@@ -116,16 +116,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "aprovisionar-medidor:serve"
+            "devServerTarget": "medidores:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "aprovisionar-medidor:serve:production"
+              "devServerTarget": "medidores:serve:production"
             }
           }
         }
       }
-    }
-  },
-  "defaultProject": "aprovisionar-medidor"
+    }},
+  "defaultProject": "medidores"
 }

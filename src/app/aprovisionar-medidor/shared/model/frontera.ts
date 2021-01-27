@@ -1,0 +1,40 @@
+import { Contrato } from './contrato';
+import { Medidor } from './medidor';
+import { Autogenerador } from './autogenerador';
+import { IdentificadoresIntegracion } from './identificadoresIntegracion';
+import { Posicion } from './posicion';
+import { Epecista } from './epecista';
+import { Ubicacion } from './ubicacion';
+import { Saldos } from './saldos';
+
+export class Frontera {
+  autogenerador: Autogenerador;
+  capacidad: number;
+  circuito: string;
+  comercializador: number;
+  constanteEnergia: number;
+  contrato: Contrato;
+  entregaExcedentes: boolean;
+  estrato: number;
+  fechaConexion: Date;
+  fechaPasoOpen: Date;
+  fechaMatricula: Date;
+  id: string;
+  identificadoresIntegracion: IdentificadoresIntegracion;
+  medidor: Medidor;
+  niu: string;
+  nodoTransformador: number;
+  pedido: string;
+  epecista: Epecista;
+  posicion: Posicion;
+  programa: number;
+  servicioSuscrito: string;
+  ubicacion: Ubicacion;
+  estacionRadiacion: string;
+  tipoGeneracion: number;
+  radicado: string;
+  observacion: string;
+  fechaSolicitudDocumento: Date;
+  seleccionado?: boolean;
+  saldos: Saldos[];
+}

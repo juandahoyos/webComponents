@@ -1,0 +1,28 @@
+<form [formGroup]="fronteraForm">
+  <div class="epm-container_section">
+    <div class="epm-row" formGroupName="medidor">
+      <div class="epm-col-md-2" formGroupName="comunicacion">
+        <epm-input id="ip" validar label="Ip" formControlName="ip" normal-style>
+        </epm-input>
+      </div>
+      <div class="epm-col-md-2" formGroupName="comunicacion">
+        <epm-input id="puerto" validar label="Puerto" formControlName="puerto" normal-style>
+        </epm-input>
+      </div>
+      <div *ngIf="!mostrarCampos" class="epm-col-md-2" style="top: 30px; left: 30px">
+        <label id="lblFechaRegistro" style="color: #8b8b8b;"><strong>Fecha registro</strong></label>
+        <br>
+        <br>
+        <label id="lblFechaAprovisionamiento" style="color: #8b8b8b;">{{fechaAprovisionamientoIot}}</label>
+      </div>
+      <div *ngIf="!mostrarCampos" class="epm-col-md-2" style="margin-top: 50px;" formGroupName="comunicacion">
+        <epm-checkbox id="aprovisionado" label="Aprovisionado" formControlName="aprovisionado" [disabled]="true">
+        </epm-checkbox>
+      </div>
+      <div *ngIf="!mostrarCampos" class="epm-col-md-2" formGroupName="habilitadores" style="margin-top: 50px;">
+        <button epmButton id="btnGuardar" color="primary" [disabled]="habilitarBotonAprovisionar"
+        (click)="aprovisionarMedidor()">Aprovisionar</button>
+      </div>
+    </div>
+  </div>
+</form>
