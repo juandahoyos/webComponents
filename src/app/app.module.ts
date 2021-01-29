@@ -1,44 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Injector, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AprovisionarMedidorComponent } from './aprovisionar-medidor/aprovisionar-medidor.component';
-import { BaseService } from './services/base.service';
-import { FronteraService } from './aprovisionar-medidor/shared/service/frontera.service';
-import { HttpClientModule } from '@angular/common/http';
-import { EpmButtonsModule } from '@epm/webcomponents/buttons';
-import { EpmFormsModule } from '@epm/webcomponents/forms';
-import { EpmFormsValidacionesModule } from '@epm/webcomponents/forms-validaciones';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EpmToastsModule } from '@epm/webcomponents/toasts';
+//import { createCustomElement } from '@angular/elements';
+import { AprovisionarMedidorComponent, MedidorComponentModule } from './components/public_api';
+import { AppRoutingModule } from './app-routing.module';
+import { TestComponentsModule } from './test-components/test-components.module';
 import { DatePipe } from '@angular/common';
-import { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AprovisionarMedidorComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    EpmButtonsModule,
-    EpmFormsModule,
-    EpmFormsValidacionesModule,
-    FormsModule,
-    ReactiveFormsModule,
-    EpmToastsModule,
+    AppRoutingModule,
+    MedidorComponentModule,
+    TestComponentsModule
   ],
+  providers: [DatePipe],
+  bootstrap: [AppComponent],
   entryComponents: [AprovisionarMedidorComponent],
-  providers: [ BaseService, FronteraService, FormBuilder, DatePipe ],
-  bootstrap: [AppComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
 
-  constructor(injector: Injector) {
-    const medidor = createCustomElement(AprovisionarMedidorComponent, {injector});
-    customElements.define('app-aprovisionar-medidor', medidor);
-  }
+  // constructor(injector: Injector) {}
 
-  ngDoBootstrap() {}
+  // ngDoBootstrap() {}
+
+  // const medidor = createCustomElement(AprovisionarMedidorComponent, {injector});
+  //   customElements.define('app-aprovisionar-medidor', medidor);
 }

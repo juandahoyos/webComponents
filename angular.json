@@ -32,7 +32,11 @@
               "node_modules/@epm/webcomponents/assets/css/web-components.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "node_modules/document-register-element/build/document-register-element.js"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -125,6 +129,20 @@
           }
         }
       }
-    }},
+    },
+    "medidores-component-library": {
+      "projectType": "library",
+      "root": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "src/app/components/tsconfig.lib.json",
+            "project": "src/app/components/ng-package.json"
+          }
+        }
+      }
+    }
+  },
   "defaultProject": "medidores"
 }

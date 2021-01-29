@@ -1,18 +1,18 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EpmToast } from '@epm/webcomponents/toasts';
-import { AprovisionarMedidor } from './shared/model/aprovisionarMedidor';
-import { Frontera } from './shared/model/frontera';
-import { FronteraRequest } from './shared/model/fronteraRequest';
-import { FronteraService } from './shared/service/frontera.service';
+// import { EpmToast } from '@epm/webcomponents/toasts';
+import { AprovisionarMedidor } from '../../api/model/aprovisionarMedidor';
+import { Frontera } from '../../api/model/frontera';
+import { FronteraRequest } from '../../api/model/fronteraRequest';
+import { FronteraService } from '../../api/service/frontera-service/frontera.service';
 
-const FORMATO_DIRECCION_IP = 'El formato ingresado de dirección IP no es válido';
-const FORMATO_PUERTO = 'El formato del puerto debe ser númerico';
-const CAMPOS_POR_DILIGENCIAR = 'Se deben diligenciar todos los campos que son obligatorios(*)';
-const APROVISIONAR_MEDIDOR = 'Se ha aprovisionado el medidor';
-const DISPOSITIVO = 'El dispositivo con ID:';
-const YA_EXISTE = 'ya existe';
+// const FORMATO_DIRECCION_IP = 'El formato ingresado de dirección IP no es válido';
+// const FORMATO_PUERTO = 'El formato del puerto debe ser númerico';
+// const CAMPOS_POR_DILIGENCIAR = 'Se deben diligenciar todos los campos que son obligatorios(*)';
+// const APROVISIONAR_MEDIDOR = 'Se ha aprovisionado el medidor';
+// const DISPOSITIVO = 'El dispositivo con ID:';
+// const YA_EXISTE = 'ya existe';
 
 @Component({
   selector: 'app-aprovisionar-medidor',
@@ -40,7 +40,7 @@ export class AprovisionarMedidorComponent implements OnInit {
     protected fronteraService: FronteraService,
     private fb: FormBuilder,
     public datePipe: DatePipe,
-    private toastService: EpmToast,
+    // private toastService: EpmToast,
   ) { }
 
   ngOnInit(): void {
@@ -195,15 +195,15 @@ export class AprovisionarMedidorComponent implements OnInit {
   aprovisionarMedidor() {
     this.guardando = true;
     if (!this.evaluarDireccionIpCumpleFormatoAprovisionar(this.fronteraForm.value.medidor.comunicacion.ip)) {
-      this.toastService.open({ type: 'ERROR', body: FORMATO_DIRECCION_IP });
+      // this.toastService.open({ type: 'ERROR', body: FORMATO_DIRECCION_IP });
       return;
     }
     if (!this.evaluarNumeroPuerto(this.fronteraForm.value.medidor.comunicacion.puerto) || this.fronteraForm.value.medidor.comunicacion.puerto === 'No hay datos') {
-      this.toastService.open({ type: 'ERROR', body: FORMATO_PUERTO });
+      // this.toastService.open({ type: 'ERROR', body: FORMATO_PUERTO });
       return;
     }
     if (this.fronteraForm.invalid) {
-      this.toastService.open({ type: 'WARNING', body: CAMPOS_POR_DILIGENCIAR });
+      // this.toastService.open({ type: 'WARNING', body: CAMPOS_POR_DILIGENCIAR });
       this.error = true;
       return;
     }
@@ -213,15 +213,15 @@ export class AprovisionarMedidorComponent implements OnInit {
     this.aprovisionaMedidor.puerto = this.frontera.medidor.comunicacion.puerto;
     this.fronteraService.aprovisionarMedidor(this.aprovisionaMedidor).subscribe(
       (_) => {
-        this.toastService.open({ type: 'SUCCESS', body: APROVISIONAR_MEDIDOR });
+        // this.toastService.open({ type: 'SUCCESS', body: APROVISIONAR_MEDIDOR });
         this.guardando = false;
         this.detallesFrontera();
       },
       (error) => {
         this.error = error;
-        this.toastService.open({
-          type: 'ERROR',
-          body: DISPOSITIVO + ' ' + this.marca + '-' + this.referencia + '-' + this.serial + ' ' + YA_EXISTE });
+        // this.toastService.open({
+        //   type: 'ERROR',
+        //   body: DISPOSITIVO + ' ' + this.marca + '-' + this.referencia + '-' + this.serial + ' ' + YA_EXISTE });
         this.guardando = false;
       },
     );

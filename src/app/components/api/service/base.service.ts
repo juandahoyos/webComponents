@@ -74,12 +74,8 @@ export class BaseService {
         );
     }
 
-    public doGetParameters<T>(serviceUrl: string, parametros: URLSearchParams, opts?: Options): Observable<T> {
+    public doGetParameters<T>(serviceUrl: string, opts?: Options): Observable<T> {
         const ropts = this.createOptions(opts);
-        const options = parametros !== null ? {
-            headers: ropts.headers,
-            params: parametros
-        } : ropts;
 
         return this.http.get(serviceUrl, ropts).pipe(
             map(response => response as T)

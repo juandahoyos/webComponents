@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from 'src/app/services/base.service';
+import { BaseService } from 'src/app/components/api/service/base.service';
 import { environment } from 'src/environments/environment';
-import { AprovisionarMedidor } from '../model/aprovisionarMedidor';
-import { Frontera } from '../model/frontera';
-import { FronteraRequest } from '../model/fronteraRequest';
+import { AprovisionarMedidor } from '../../model/aprovisionarMedidor';
+import { Frontera } from '../../model/frontera';
+import { FronteraRequest } from '../../model/fronteraRequest';
 
 @Injectable({
   providedIn: 'root'
