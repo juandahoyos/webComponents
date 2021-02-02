@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestAprovisionarMedidorComponent implements OnInit {
 
-  constructor() { }
+  public idFrontera: string;
+
+  constructor() {
+    this.idFrontera = '03c435dd-3606-4ae4-4ef2-08d872c581cb'
+  }
 
   ngOnInit(): void {
   }

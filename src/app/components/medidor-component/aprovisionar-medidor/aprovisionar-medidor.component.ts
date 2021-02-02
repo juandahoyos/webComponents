@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { EpmToast } from '@epm/webcomponents/toasts';
 import { AprovisionarMedidor } from '../../api/model/aprovisionarMedidor';
@@ -21,10 +21,13 @@ import { FronteraService } from '../../api/service/frontera-service/frontera.ser
 })
 export class AprovisionarMedidorComponent implements OnInit {
 
+  @Input() id: string;
+  @Output() clickEvent = new EventEmitter();
+
   public frontera: Frontera;
   public idFrontera: FronteraRequest;
   public aprovisionaMedidor: AprovisionarMedidor;
-  public id: string;
+  // public id: string;
   public guardando = false;
   public error: boolean;
   public serial: string;
@@ -32,6 +35,8 @@ export class AprovisionarMedidorComponent implements OnInit {
   public referencia: string;
   public mostrarCampos: boolean;
   public habilitarBotonAprovisionar: boolean;
+
+  mostrarInfoMedidor: boolean;
 
   public fechaAprovisionamientoIot: string;
   fronteraForm: FormGroup;
@@ -45,9 +50,13 @@ export class AprovisionarMedidorComponent implements OnInit {
 
   ngOnInit(): void {
     this.inicializarFormularioFrontera();
-    this.detallesFrontera();
+    this. mostrarComponenteMedidor();
+    // this.detallesFrontera();
   }
 
+  mostrarComponenteMedidor() {
+    this.mostrarInfoMedidor = this.mostrarInfoMedidor ? false : true;
+  }
 
   inicializarFormularioFrontera() {
     this.fronteraForm = this.fb.group({
@@ -157,7 +166,7 @@ export class AprovisionarMedidorComponent implements OnInit {
     //Otro Medidor bacd37df-076e-41a5-4fd5-08d872c581cb
     //Iskra MT174 9d24145b-82b8-4b76-4ee4-08d872c581cb - 4ac5d14f-35ef-4c53-4eea-08d872c581cb
     this.idFrontera = new FronteraRequest();
-    this.idFrontera.id = '4ac5d14f-35ef-4c53-4eea-08d872c581cb';
+    this.idFrontera.id = this.id;
     this.fronteraService.obtenerDetalleFrontera(this.idFrontera).subscribe((dataFrontera) => {
       this.frontera = dataFrontera;
       this.formularioFrontera.medidor.setValue(this.frontera.medidor);
@@ -225,6 +234,10 @@ export class AprovisionarMedidorComponent implements OnInit {
         this.guardando = false;
       },
     );
+  }
+
+  pruebaServicio() {
+    this.clickEvent.emit(this.aprovisionarMedidor());
   }
 
   evaluarDireccionIpCumpleFormatoAprovisionar(ip: string) {

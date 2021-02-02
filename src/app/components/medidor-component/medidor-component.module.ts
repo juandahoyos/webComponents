@@ -6,7 +6,7 @@ import { ApiModule } from 'medidores/api';
 import { EpmButtonsModule } from '@epm/webcomponents/buttons';
 import { EpmFormsModule } from '@epm/webcomponents/forms';
 import { EpmFormsValidacionesModule } from '@epm/webcomponents/forms-validaciones';
-// import { EpmToastsModule } from '@epm/webcomponents/toasts';
+//import { EpmToastsModule } from '@epm/webcomponents/toasts';
 
 @NgModule({
   declarations: [AprovisionarMedidorComponent],
@@ -18,7 +18,7 @@ import { EpmFormsValidacionesModule } from '@epm/webcomponents/forms-validacione
     EpmButtonsModule,
     EpmFormsModule,
     EpmFormsValidacionesModule,
-    // EpmToastsModule,
+    //EpmToastsModule,
   ],
   exports: [AprovisionarMedidorComponent],
 })
