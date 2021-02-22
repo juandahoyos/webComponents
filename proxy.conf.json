@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://10.250.36.210",
+    "target": "http://autogeneradores-dllo.epm.com.co",
     "secure": false,
     "logLevel": "debug"
   }

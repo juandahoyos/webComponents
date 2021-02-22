@@ -10,7 +10,7 @@ export class TestAprovisionarMedidorComponent implements OnInit {
   public idFrontera: string;
 
   constructor() {
-    this.idFrontera = '03c435dd-3606-4ae4-4ef2-08d872c581cb'
+    this.idFrontera = '4ac5d14f-35ef-4c53-4eea-08d872c581cb'
   }
 
   ngOnInit(): void {
