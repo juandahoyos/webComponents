@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { AprovisionarMedidor } from '../../model/aprovisionarMedidor';
 import { Frontera } from '../../model/frontera';
 import { FronteraRequest } from '../../model/fronteraRequest';
+import { RequestFronteraMedidor } from '../../model/requestFronteraMedidor';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,9 @@ export class FronteraService {
 
   public aprovisionarMedidor(aprovisionar: AprovisionarMedidor) {
     return this.http.doPost<AprovisionarMedidor, any>(`${environment.apiUrl}/frontera/medidor/aprovisionar`, aprovisionar);
+  }
+
+  public desaprovisionarMedidor(idFrontera: RequestFronteraMedidor) {
+    return this.http.doPost<RequestFronteraMedidor, any>(`${environment.apiUrl}/frontera/medidor/desaprovisionar`, idFrontera);
   }
 }

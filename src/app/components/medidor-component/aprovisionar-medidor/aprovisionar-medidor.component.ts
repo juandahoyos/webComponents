@@ -5,14 +5,17 @@ import { EpmToast } from '@epm/webcomponents/toasts';
 import { AprovisionarMedidor } from '../../api/model/aprovisionarMedidor';
 import { Frontera } from '../../api/model/frontera';
 import { FronteraRequest } from '../../api/model/fronteraRequest';
+import { RequestFronteraMedidor } from '../../api/model/requestFronteraMedidor';
 import { FronteraService } from '../../api/service/frontera-service/frontera.service';
 
 const FORMATO_DIRECCION_IP = 'El formato ingresado de dirección IP no es válido';
 const FORMATO_PUERTO = 'El formato del puerto debe ser númerico';
 const CAMPOS_POR_DILIGENCIAR = 'Se deben diligenciar todos los campos que son obligatorios(*)';
+const PROBLEMAS_AL_PROCESAR_SOLICITUD = 'Lo sentimos, no se pudo procesar la solicitud de envío';
 const APROVISIONAR_MEDIDOR = 'Se ha aprovisionado el medidor';
 const DISPOSITIVO = 'El dispositivo con ID:';
 const YA_EXISTE = 'ya existe';
+const DESAPROVISIONAR_MEDIDOR = 'El medidor ha sido desaprovisionado'
 
 @Component({
   selector: 'app-aprovisionar-medidor',
@@ -27,14 +30,17 @@ export class AprovisionarMedidorComponent implements OnInit {
   public frontera: Frontera;
   public idFrontera: FronteraRequest;
   public aprovisionaMedidor: AprovisionarMedidor;
+  public idFronteraMedidor: RequestFronteraMedidor;
   // public id: string;
   public guardando = false;
   public error: boolean;
   public serial: string;
   public marca: string;
   public referencia: string;
+
   public mostrarCampos: boolean;
   public habilitarBotonAprovisionar: boolean;
+  public habilitarBotonDesaprovisionar: boolean;
 
   mostrarInfoMedidor: boolean;
 
@@ -46,7 +52,11 @@ export class AprovisionarMedidorComponent implements OnInit {
     private fb: FormBuilder,
     public datePipe: DatePipe,
     private toastService: EpmToast,
-  ) { }
+  ) {
+    this.habilitarBotonAprovisionar = false;
+    this.habilitarBotonDesaprovisionar = false;
+    this.mostrarCampos = false;
+  }
 
   ngOnInit(): void {
     this.inicializarFormularioFrontera();
@@ -171,8 +181,7 @@ export class AprovisionarMedidorComponent implements OnInit {
       this.frontera = dataFrontera;
       this.formularioFrontera.medidor.setValue(this.frontera.medidor);
       this.fechaAprovisionamientoIot = this.validarfechaRegistro(this.frontera.medidor.comunicacion.fechaAprovisionamientoIot.toString());
-      this.habilitarBoton();
-      console.log(this.frontera);
+      this.habilitarBotonAprovisionarYDesaprovisionar();
     });
   }
 
@@ -189,12 +198,13 @@ export class AprovisionarMedidorComponent implements OnInit {
     return date;
   }
 
-  habilitarBoton() {
-    this.habilitarBotonAprovisionar = true;
-    if (this.frontera.medidor.comunicacion.aprovisionado && this.frontera.medidor.habilitadores.permiteAprovisionamiento === true) {
-      this.habilitarBotonAprovisionar = true;
-    } else if (this.frontera.medidor.comunicacion.aprovisionado === false && this.frontera.medidor.habilitadores.permiteAprovisionamiento === true) {
+  habilitarBotonAprovisionarYDesaprovisionar() {
+    if (this.frontera.medidor.comunicacion.aprovisionado && this.frontera.medidor.habilitadores.permiteAprovisionamiento) {
+      this.habilitarBotonDesaprovisionar = true;
       this.habilitarBotonAprovisionar = false;
+    } else if (!this.frontera.medidor.comunicacion.aprovisionado && this.frontera.medidor.habilitadores.permiteAprovisionamiento) {
+      this.habilitarBotonDesaprovisionar = false;
+      this.habilitarBotonAprovisionar = true;
     } else {
       this.mostrarCampos = this.mostrarCampos ? false : true;
     }
@@ -230,6 +240,24 @@ export class AprovisionarMedidorComponent implements OnInit {
         this.toastService.open({
           type: 'ERROR',
           body: DISPOSITIVO + ' ' + this.marca + '-' + this.referencia + '-' + this.serial + ' ' + YA_EXISTE });
+        this.guardando = false;
+      },
+    );
+  }
+
+  desaprovisionarMedidor() {
+    this.idFronteraMedidor = new RequestFronteraMedidor();
+    this.idFronteraMedidor.idFrontera = this.frontera.id;
+    this.fronteraService.desaprovisionarMedidor(this.idFronteraMedidor).subscribe(
+      (_) => {
+        this.toastService.open({ type: 'SUCCESS', body: DESAPROVISIONAR_MEDIDOR });
+        this.detallesFrontera();
+      },
+      (error) => {
+        this.error = error;
+        this.toastService.open({
+          type: 'ERROR',
+          body: PROBLEMAS_AL_PROCESAR_SOLICITUD });
         this.guardando = false;
       },
     );

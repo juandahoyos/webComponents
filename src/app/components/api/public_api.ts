@@ -14,5 +14,6 @@ export * from './model/medidor';
 export * from './model/posicion';
 export * from './model/saldos';
 export * from './model/ubicacion';
+export * from './model/requestFronteraMedidor';
 export * from './service/frontera-service/frontera.service';
 export * from './service/base.service';
